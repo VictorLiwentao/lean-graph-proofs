@@ -269,5 +269,48 @@
     "exit_code": 0,
     "sha256": "18ffbee74fef41e17b1e9ef880c43f88d54e53030f545f9cb9bb228c0a254fec",
     "log": "REUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.WOWII101\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.Induced\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.WOWII20\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.Independence\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.SpanningTree\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.WOWII7\nDIRECT PINNED BUILD LeanGraphProofs\n"
-  }
+  },
+  "deepmind_toolchain_cross_check": {
+    "toolchain": "Lean 4.33.1",
+    "description": "Fresh builds of the preserved original research proofs and exact-statement wrappers against current DeepMind modules and its own pinned dependencies.",
+    "combined_wrapper": "import FormalConjectures.WrittenOnTheWallII.GraphConjecture101\nimport WOWII101\nimport FormalConjectures.WrittenOnTheWallII.GraphConjecture20\nimport WOWII20\nimport FormalConjectures.WrittenOnTheWallII.GraphConjecture7\nimport WOWII7\n\n/-! Exact-type checks against the current DeepMind declarations and pinned dependencies. -/\n\nnamespace WrittenOnTheWallII.GraphConjecture101\nopen SimpleGraph\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\ntheorem currentStatement101 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    G.indepNum \u2264 (Fintype.card \u03b1 + (alphaCore G).card) / 2 := WOWII101.conjecture101 G h\nend WrittenOnTheWallII.GraphConjecture101\n#print axioms WrittenOnTheWallII.GraphConjecture101.currentStatement101\n\nnamespace WrittenOnTheWallII.GraphConjecture20\nopen SimpleGraph\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\ntheorem currentStatement20 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    let deg_avg : \u211d := (\u2211 v : \u03b1, (G.degree v : \u211d)) / (Fintype.card \u03b1 : \u211d)\n    (Fintype.card \u03b1 : \u211d) / (\u230adeg_avg\u230b : \u211d) \u2264 (b G : \u211d) := WOWII20.conjecture20 G h\nend WrittenOnTheWallII.GraphConjecture20\n#print axioms WrittenOnTheWallII.GraphConjecture20.currentStatement20\n\nnamespace WrittenOnTheWallII.GraphConjecture7\nopen SimpleGraph\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\ntheorem currentStatement7 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)\n    ((maxL : \u2124) - 1 + (Fintype.card \u03b1 : \u2124) - 2 * (G.indepNum : \u2124) : \u211d) \u2264 Ls G := WOWII7.conjecture7 G h\nend WrittenOnTheWallII.GraphConjecture7\n#print axioms WrittenOnTheWallII.GraphConjecture7.currentStatement7\n\n",
+    "combined_wrapper_log": "'WrittenOnTheWallII.GraphConjecture101.currentStatement101' depends on axioms: [propext, Classical.choice, Quot.sound]\n'WrittenOnTheWallII.GraphConjecture20.currentStatement20' depends on axioms: [propext, Classical.choice, Quot.sound]\n'WrittenOnTheWallII.GraphConjecture7.currentStatement7' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+    "targets": [
+      {
+        "id": "WOWII101",
+        "exit_code": 0,
+        "toolchain": "4.33.1",
+        "source_sha256": "5018f7ba7f2ec8b63d4334b606d8936db097e635f9c959c3d2877ae9dee8e34a"
+      },
+      {
+        "id": "WOWII20",
+        "exit_code": 0,
+        "toolchain": "4.33.1",
+        "source_sha256": "598c0a6231dbf61e68ded32dc047193c2149554d1b222caf28397cb1a719365c"
+      },
+      {
+        "id": "WOWII7",
+        "exit_code": 0,
+        "toolchain": "4.33.1",
+        "source_sha256": "c85feea04b8babc79e8fd9a5c227f74ed725534edaa101a63f7e4d0ef1e3244c"
+      }
+    ]
+  },
+  "deepmind_submissions": [
+    {
+      "number": 7115,
+      "url": "https://github.com/google-deepmind/formal-conjectures/pull/7115",
+      "headRefOid": "9496a8d7e81f7ab724f18264bbe98ca64a6556ad"
+    },
+    {
+      "number": 7117,
+      "url": "https://github.com/google-deepmind/formal-conjectures/pull/7117",
+      "headRefOid": "460daecf329179b7a4b4f11e0166e898ee7df292"
+    },
+    {
+      "number": 7119,
+      "url": "https://github.com/google-deepmind/formal-conjectures/pull/7119",
+      "headRefOid": "75eafe7d8f4a7b5887b7030e532f619fe25f5570"
+    }
+  ]
 }

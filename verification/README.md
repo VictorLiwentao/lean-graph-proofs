@@ -16,6 +16,10 @@ Challenges are extracted from DeepMind commit `4c40439d9be65b242e9196fb7848be02a
 
 The WOWII 101 deletion/core definitions are copied directly from the original statement. Shared graph definitions come from the same DeepMind commit. The original research proof bodies are preserved, apart from deprecated tactic-lemma spellings (`dif_pos`, `if_pos`, `if_neg`) updated for Mathlib v4.34.0-rc2. No admitted target theorem is imported by the proofs.
 
+## DeepMind toolchain compatibility
+
+The original research proof sources were also freshly compiled with DeepMind's own Lean v4.33.1 and current pinned dependencies. Exact-statement wrappers for all three targets typechecked against the current DeepMind modules, and their axiom lists contain only the same three standard axioms. These are additional native-toolchain checks; the Comparator run above uses v4.34.0-rc2. The logs and source hashes are included in `current.json`.
+
 ## Comparator
 
 [Comparator](https://github.com/leanprover/comparator) commit `ca04cfc72b550331658ec314bf47685281bfd4bf` and compatible lean4export commit `cacf989bd75f608700820f6afc595f32e7a99a4d` were used. The comparison/axiom-checking code and the upstream built-in kernel replay functions are unchanged.

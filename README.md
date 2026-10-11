@@ -2,11 +2,11 @@
 
 Lean formalizations of known results from *Written on the Wall II*, by **Wentao Li**, with AI assistance. The original Lean statements and shared graph definitions are by **The Formal Conjectures Authors**. The mathematical authors are credited below and in each source note.
 
-| Problem | Result | Lean proof | Explanation and sources |
-| --- | --- | --- | --- |
-| WOWII 101 | Hajnal independence-core inequality | [WOWII101.lean](LeanGraphProofs/WOWII101.lean) | [Proof](proofs/WOWII101/PROOF.md) · [Sources](proofs/WOWII101/SOURCE.md) |
-| WOWII 20 | Induced bipartite subgraph bound | [WOWII20.lean](LeanGraphProofs/WOWII20.lean) | [Proof](proofs/WOWII20/PROOF.md) · [Sources](proofs/WOWII20/SOURCE.md) |
-| WOWII 7 | Spanning-tree leaf bound | [WOWII7.lean](LeanGraphProofs/WOWII7.lean) | [Proof](proofs/WOWII7/PROOF.md) · [Sources](proofs/WOWII7/SOURCE.md) |
+| Problem | Result | Lean proof | Explanation and sources | DeepMind PR |
+| --- | --- | --- | --- | --- |
+| WOWII 101 | Hajnal independence-core inequality | [WOWII101.lean](LeanGraphProofs/WOWII101.lean) | [Proof](proofs/WOWII101/PROOF.md) · [Sources](proofs/WOWII101/SOURCE.md) | [#7115](https://github.com/google-deepmind/formal-conjectures/pull/7115) |
+| WOWII 20 | Induced bipartite subgraph bound | [WOWII20.lean](LeanGraphProofs/WOWII20.lean) | [Proof](proofs/WOWII20/PROOF.md) · [Sources](proofs/WOWII20/SOURCE.md) | [#7117](https://github.com/google-deepmind/formal-conjectures/pull/7117) |
+| WOWII 7 | Spanning-tree leaf bound | [WOWII7.lean](LeanGraphProofs/WOWII7.lean) | [Proof](proofs/WOWII7/PROOF.md) · [Sources](proofs/WOWII7/SOURCE.md) | [#7119](https://github.com/google-deepmind/formal-conjectures/pull/7119) |
 
 Each problem has one canonical Lean file and one proof/source pair. Shared definitions live in `LeanGraphProofs/Support/`. [Verification](verification/README.md) records fresh compilation, Comparator statement/definition comparison and kernel replay.
 
