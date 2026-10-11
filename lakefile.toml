@@ -1,0 +1,17 @@
+name = "lean-graph-proofs"
+version = "0.1.0"
+keywords = ["math", "graph-theory"]
+defaultTargets = ["LeanGraphProofs"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.34.0-rc2"
+
+[[lean_lib]]
+name = "LeanGraphProofs"

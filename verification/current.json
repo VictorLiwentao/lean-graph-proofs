@@ -1,0 +1,273 @@
+{
+  "date": "2026-10-11T04:27:35.669364+00:00",
+  "all_passed": true,
+  "toolchain": "Lean 4.34.0-rc2",
+  "upstream_statement_commit": "4c40439d9be65b242e9196fb7848be02a9a4481d",
+  "method": "Fresh direct Lean compilation with warnings as errors; Comparator macOS runner checks original theorem types, transitive definitions, axiom whitelist and fresh built-in kernel replay.",
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "comparator": {
+    "repository": "https://github.com/leanprover/comparator",
+    "commit": "ca04cfc72b550331658ec314bf47685281bfd4bf",
+    "lean4export_commit": "cacf989bd75f608700820f6afc595f32e7a99a4d",
+    "core_source_unchanged": true,
+    "original_toolchain": "v4.35.0-rc4",
+    "audit_toolchain": "v4.34.0-rc2",
+    "adaptation": "Current Comparator core sources with version-compatible exporter; build/execute via pinned direct Lean, Python orchestration and #eval entry points to avoid macOS Lean IO-main/SIGTRAP failures. macOS sandbox-exec restrictions replace Landrun. No external kernel."
+  },
+  "targets": [
+    {
+      "id": "WOWII101",
+      "status": "passed",
+      "proof_file": "LeanGraphProofs/WOWII101.lean",
+      "proof_sha256": "6743339486a683d1ac4f6615c7e688d67116a65f371028f5ae24c0f940ccd544",
+      "upstream_statement": {
+        "target": "WOWII101",
+        "commit": "b42564b6f4e04abf0256355f53000056e2c2c924",
+        "path": "research/batches/b01/workers/cursor-07-r02/targets/WOWII101/WOWII101.lean",
+        "sha256": "5018f7ba7f2ec8b63d4334b606d8936db097e635f9c959c3d2877ae9dee8e34a",
+        "lines": 314,
+        "url": "https://github.com/VictorLiwentao/formal-conjectures/blob/b42564b6f4e04abf0256355f53000056e2c2c924/research/batches/b01/workers/cursor-07-r02/targets/WOWII101/WOWII101.lean",
+        "upstream_commit": "4c40439d9be65b242e9196fb7848be02a9a4481d",
+        "original_statement_sha256": "f8f872684c2768eb4e58fb2feec684d09174ed137a5a70836859448bd09261c1"
+      },
+      "config": {
+        "challenge_module": "ChallengeWOWII101",
+        "solution_module": "SolutionWOWII101",
+        "theorem_names": [
+          "WrittenOnTheWallII.GraphConjecture101.conjecture101"
+        ],
+        "permitted_axioms": [
+          "propext",
+          "Quot.sound",
+          "Classical.choice"
+        ]
+      },
+      "challenge_source": "/-\nCopyright 2026 The Formal Conjectures Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    https://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n-/\n\nimport Mathlib.Combinatorics.SimpleGraph.Clique\nimport Mathlib.Tactic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite\n\n/-!\n# Written on the Wall II - Conjecture 101\n\n*Reference:*\n[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\n## Definitions\n\nThe **$\\alpha$-core** of a graph $G$, written `alphaCore G`, is the set of vertices\n$v$ such that removing $v$ strictly decreases the independence number:\n$$\\mathrm{alphaCore}(G) = \\{v \\mid \\alpha(G - v) < \\alpha(G)\\}$$\nwhere $G - v$ is the subgraph of $G$ induced on $V(G) \\setminus \\{v\\}$.\n\nThese vertices are also called \"critical vertices for independence.\"\n-/\n\n\nnamespace WrittenOnTheWallII.GraphConjecture101\n\nopen SimpleGraph\n\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n\n/-- The independence number of the subgraph induced on $V \\setminus \\{v\\}$\n(i.e., the graph $G - v$). -/\nnoncomputable def indepNumDeleteVertex (G : SimpleGraph \u03b1) (v : \u03b1) : \u2115 :=\n  (G.induce (Set.univ \\ {v})).indepNum\n\n/-- The $\\alpha$-core of $G$: the set of vertices whose removal strictly decreases the\nindependence number. A vertex $v$ is in the $\\alpha$-core if $\\alpha(G - v) < \\alpha(G)$. -/\nnoncomputable def alphaCore (G : SimpleGraph \u03b1) : Finset \u03b1 :=\n  Finset.univ.filter (fun v => indepNumDeleteVertex G v < G.indepNum)\n\n/--\nWOWII [Conjecture 101](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\nFor a simple connected graph $G$,\n$\\alpha(G) \\le \\lfloor (n + |\\mathrm{alphaCore}(G)|) / 2 \\rfloor$\nwhere $\\alpha(G) = G.\\mathrm{indepNum}$ is the independence number, $n$ is the\nnumber of vertices, and $\\mathrm{alphaCore}(G)$ is the set of vertices whose\nremoval decreases the independence number.\n\nThis is a theorem known to follow from inclusion-exclusion principles.\n-/\ntheorem conjecture101 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    G.indepNum \u2264 (Fintype.card \u03b1 + (alphaCore G).card) / 2 := by\n  sorry\n\nend WrittenOnTheWallII.GraphConjecture101\n",
+      "solution_wrapper": "import LeanGraphProofs.WOWII101\nnamespace WrittenOnTheWallII.GraphConjecture101\nopen SimpleGraph\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\ntheorem conjecture101 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    G.indepNum \u2264 (Fintype.card \u03b1 + (alphaCore G).card) / 2 :=\n  WOWII101.conjecture101 G h\nend WrittenOnTheWallII.GraphConjecture101\n#print axioms WrittenOnTheWallII.GraphConjecture101.conjecture101\n",
+      "log": "Build challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/project/.lake']\nDIRECT PINNED BUILD ChallengeWOWII101\nChallengeWOWII101.lean:65:8: warning: declaration uses `sorry`\nExport challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nBuild solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/project/.lake']\nDIRECT PINNED BUILD LeanGraphProofs.WOWII101\nDIRECT PINNED BUILD SolutionWOWII101\n'WrittenOnTheWallII.GraphConjecture101.conjecture101' depends on axioms: [propext, Classical.choice, Quot.sound]\nExport solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nComparator match, axioms and kernel replay\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!\n",
+      "challenge_export": {
+        "bytes": 6254112,
+        "sha256": "5eeb6b7ac1475f452a7c038bfe81e6f33a5aacfa6add0f095a0ecf71f05ed73f"
+      },
+      "solution_export": {
+        "bytes": 23373501,
+        "sha256": "7beba0b6078c6f0753cfae4652a8ab471ac73dd52144fddbe4064ee60f0a7343"
+      }
+    },
+    {
+      "id": "WOWII20",
+      "status": "passed",
+      "proof_file": "LeanGraphProofs/WOWII20.lean",
+      "proof_sha256": "f6654f1ea33020e448ba7ce8034c527ce35df29e0db794bba7092cee47a9e23a",
+      "upstream_statement": {
+        "target": "WOWII20",
+        "commit": "dadf30cc901feb22fce0ba0bd200c5453266ac7a",
+        "path": "research/batches/b01/workers/cursor-07-r04/targets/WOWII20/WOWII20.lean",
+        "sha256": "598c0a6231dbf61e68ded32dc047193c2149554d1b222caf28397cb1a719365c",
+        "lines": 575,
+        "url": "https://github.com/VictorLiwentao/formal-conjectures/blob/dadf30cc901feb22fce0ba0bd200c5453266ac7a/research/batches/b01/workers/cursor-07-r04/targets/WOWII20/WOWII20.lean",
+        "upstream_commit": "4c40439d9be65b242e9196fb7848be02a9a4481d",
+        "original_statement_sha256": "ad37003334b8c53d6298c9b6c06eff6c2c8b9d64d7a6cdbf882158ec55b34e5b"
+      },
+      "config": {
+        "challenge_module": "ChallengeWOWII20",
+        "solution_module": "SolutionWOWII20",
+        "theorem_names": [
+          "WrittenOnTheWallII.GraphConjecture20.conjecture20"
+        ],
+        "permitted_axioms": [
+          "propext",
+          "Quot.sound",
+          "Classical.choice"
+        ]
+      },
+      "challenge_source": "/-\nCopyright 2025 The Formal Conjectures Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    https://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n-/\n\nimport Mathlib.Tactic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite\nimport LeanGraphProofs.Support.Induced\n\n/-!\n# Written on the Wall II - Conjecture 20\n\n*Reference:*\n[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n-/\n\n\nnamespace WrittenOnTheWallII.GraphConjecture20\n\nopen SimpleGraph\n\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n\n/--\nWOWII [Conjecture 20](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\nFor a simple connected graph `G`, `b(G) \u2265 n(G) / \u230adeg_avg(G)\u230b`, where `b(G)` is\nthe size of a largest induced bipartite subgraph, `n(G)` is the number of vertices,\nand `deg_avg(G) = (\u2211 v, deg(v)) / n(G)` is the average degree.\n-/\ntheorem conjecture20 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    let deg_avg : \u211d := (\u2211 v : \u03b1, (G.degree v : \u211d)) / (Fintype.card \u03b1 : \u211d)\n    (Fintype.card \u03b1 : \u211d) / (\u230adeg_avg\u230b : \u211d) \u2264 (b G : \u211d) := by\n  sorry\n\nend WrittenOnTheWallII.GraphConjecture20\n",
+      "solution_wrapper": "import LeanGraphProofs.WOWII20\nnamespace WrittenOnTheWallII.GraphConjecture20\nopen SimpleGraph\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\ntheorem conjecture20 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    let deg_avg : \u211d := (\u2211 v : \u03b1, (G.degree v : \u211d)) / (Fintype.card \u03b1 : \u211d)\n    (Fintype.card \u03b1 : \u211d) / (\u230adeg_avg\u230b : \u211d) \u2264 (b G : \u211d) :=\n  WOWII20.conjecture20 G h\nend WrittenOnTheWallII.GraphConjecture20\n#print axioms WrittenOnTheWallII.GraphConjecture20.conjecture20\n",
+      "log": "Build challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/project/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.Induced\nREUSE SAME-AUDIT VERIFIED BUILD ChallengeWOWII20\nExport challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nBuild solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/project/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.Induced\nDIRECT PINNED BUILD LeanGraphProofs.WOWII20\nDIRECT PINNED BUILD SolutionWOWII20\n'WrittenOnTheWallII.GraphConjecture20.conjecture20' depends on axioms: [propext, Classical.choice, Quot.sound]\nExport solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nComparator match, axioms and kernel replay\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!\n",
+      "challenge_export": {
+        "bytes": 30007324,
+        "sha256": "39f67b828b7d7dba4cce509328d94d765e06377f252fc95f90e8a7e76bd684bf"
+      },
+      "solution_export": {
+        "bytes": 67390466,
+        "sha256": "bcfdd228f4511080e19728230051d3c47f9b896ce72ceaa44918bfcce11772b9"
+      }
+    },
+    {
+      "id": "WOWII7",
+      "status": "passed",
+      "proof_file": "LeanGraphProofs/WOWII7.lean",
+      "proof_sha256": "2983e85abf8c3ca21c72f660ab0db24b6a878e958d1f95c5fff1d327fc46561f",
+      "upstream_statement": {
+        "target": "WOWII7",
+        "commit": "80a5b6480f5237d5580f673bb4ab059bbdcc4058",
+        "path": "research/batches/b01/workers/cursor-07-r05/targets/WOWII7/WOWII7.lean",
+        "sha256": "c85feea04b8babc79e8fd9a5c227f74ed725534edaa101a63f7e4d0ef1e3244c",
+        "lines": 507,
+        "url": "https://github.com/VictorLiwentao/formal-conjectures/blob/80a5b6480f5237d5580f673bb4ab059bbdcc4058/research/batches/b01/workers/cursor-07-r05/targets/WOWII7/WOWII7.lean",
+        "upstream_commit": "4c40439d9be65b242e9196fb7848be02a9a4481d",
+        "original_statement_sha256": "a56da90e8b6843ea4f287ef4f7ab3d630ee90310dff0ae03c2eba488df48745c"
+      },
+      "config": {
+        "challenge_module": "ChallengeWOWII7",
+        "solution_module": "SolutionWOWII7",
+        "theorem_names": [
+          "WrittenOnTheWallII.GraphConjecture7.conjecture7"
+        ],
+        "permitted_axioms": [
+          "propext",
+          "Quot.sound",
+          "Classical.choice"
+        ]
+      },
+      "challenge_source": "/-\nCopyright 2026 The Formal Conjectures Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    https://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n-/\n\nimport Mathlib.Tactic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite\nimport LeanGraphProofs.Support.Independence\nimport LeanGraphProofs.Support.SpanningTree\n\n/-!\n# Written on the Wall II - Conjecture 7\n\n*Reference:*\n[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n-/\n\n\nnamespace WrittenOnTheWallII.GraphConjecture7\n\nopen SimpleGraph\n\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n\n/--\nWOWII [Conjecture 7](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\nFor a simple connected graph $G$,\n$L_s(G) \\ge \\max_v \\lambda(v) - 1 + n - 2 \\alpha(G)$,\nwhere $L_s(G)$ is the maximum number of leaves over all spanning trees of $G$,\n$n = |V(G)|$, $\\alpha(G) = G.\\mathrm{indepNum}$ is the independence number, and\n$\\lambda(v) = \\mathrm{indepNeighborsCard}\\, G\\, v$ is the independence number of the\nneighbourhood of $v$.\n\nProved by DeLaVina, Fajtlowicz, Waller (2002).\n-/\ntheorem conjecture7 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)\n    ((maxL : \u2124) - 1 + (Fintype.card \u03b1 : \u2124) - 2 * (G.indepNum : \u2124) : \u211d) \u2264 Ls G := by\n  sorry\n\nend WrittenOnTheWallII.GraphConjecture7\n",
+      "solution_wrapper": "import LeanGraphProofs.WOWII7\nnamespace WrittenOnTheWallII.GraphConjecture7\nopen SimpleGraph\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\ntheorem conjecture7 (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected) :\n    let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)\n    ((maxL : \u2124) - 1 + (Fintype.card \u03b1 : \u2124) - 2 * (G.indepNum : \u2124) : \u211d) \u2264 Ls G :=\n  WOWII7.conjecture7 G h\nend WrittenOnTheWallII.GraphConjecture7\n#print axioms WrittenOnTheWallII.GraphConjecture7.conjecture7\n",
+      "log": "Build challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/project/.lake']\nDIRECT PINNED BUILD LeanGraphProofs.Support.Independence\nDIRECT PINNED BUILD LeanGraphProofs.Support.SpanningTree\nDIRECT PINNED BUILD ChallengeWOWII7\nChallengeWOWII7.lean:48:8: warning: declaration uses `sorry`\nExport challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nBuild solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/project/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.Independence\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.SpanningTree\nDIRECT PINNED BUILD LeanGraphProofs.WOWII7\nDIRECT PINNED BUILD SolutionWOWII7\n'WrittenOnTheWallII.GraphConjecture7.conjecture7' depends on axioms: [propext, Classical.choice, Quot.sound]\nExport solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nComparator match, axioms and kernel replay\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!\n",
+      "challenge_export": {
+        "bytes": 32566328,
+        "sha256": "5da2efb73665ba43147e10826e622d2b90c079303110053cfa1c7d3cbec0eb0e"
+      },
+      "solution_export": {
+        "bytes": 49823137,
+        "sha256": "d81cd2b4e9f3e741c754949c18bd093eddbdda94bba2a15d200e4acd3ce44bca"
+      }
+    }
+  ],
+  "controls": {
+    "pass": {
+      "expected_outcome_confirmed": true,
+      "log": "Build challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD Challenge\nExport challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nBuild solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD Pass\nExport solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nComparator match, axioms and kernel replay\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!\n"
+    },
+    "mismatch": {
+      "expected_outcome_confirmed": true,
+      "log": "Build challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD Challenge\nExport challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nBuild solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD Mismatch\nExport solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nComparator match, axioms and kernel replay\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\n/Users/wentaoli/Research/wowii-publication-2026-10-10/exports/mismatch/Replay.lean:2:0: error: Challenge and solution theorem statement do not match: 'check'\nComparator match, axioms and kernel replay failed with 1\n"
+    },
+    "axiom": {
+      "expected_outcome_confirmed": true,
+      "log": "Build challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD Challenge\nExport challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nBuild solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nREUSE SAME-AUDIT VERIFIED BUILD Axiom\nExport solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nComparator match, axioms and kernel replay\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\n/Users/wentaoli/Research/wowii-publication-2026-10-10/exports/axiom/Replay.lean:2:0: error: Illegal axiom detected: 'untrusted'\nComparator match, axioms and kernel replay failed with 1\n"
+    },
+    "definition": {
+      "expected_outcome_confirmed": true,
+      "log": "Build challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nDIRECT PINNED BUILD DefinitionChallenge\nDefinitionChallenge.lean:2:8: warning: declaration uses `sorry`\nExport challenge\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nBuild solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev', '/Users/wentaoli/Research/wowii-publication-2026-10-10/controls/.lake']\nDIRECT PINNED BUILD DefinitionChanged\nExport solution\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\nComparator match, axioms and kernel replay\nMACOS RESTRICTIONS: deny network and filesystem writes except ['/dev']\n/Users/wentaoli/Research/wowii-publication-2026-10-10/exports/definition/Replay.lean:2:0: error: Const does not match between challenge and target 'target'\nComparator match, axioms and kernel replay failed with 1\n"
+    }
+  },
+  "checker_source_integrity": {
+    "def runBuiltinKernel": {
+      "unchanged": true,
+      "sha256": "f0f1f1f46f2b4204f3a32fabf0ca82751d691e6b6af7cfca1e9906470aad5671"
+    },
+    "def verifyMatch": {
+      "unchanged": true,
+      "sha256": "fca80f143f38808c0ed4fdc5a29d2b173d6d68299da5fd2e2ccceaec0486b1f4"
+    },
+    "Comparator.lean": {
+      "unchanged": true,
+      "sha256": "6c73ecd5bd429cf85e0aaa75b7c6f874ec0598d5afca60dcf5711d44e6bdef23"
+    }
+  },
+  "pinned_dependencies": [
+    {
+      "name": "mathlib",
+      "commit": "85e3a25e006c35636f0e53b0e9296caca2685bc0",
+      "tracked_clean": true
+    },
+    {
+      "name": "plausible",
+      "commit": "d9598f07b1bc701f1e3aae163d2681c1fd978793",
+      "tracked_clean": true
+    },
+    {
+      "name": "LeanSearchClient",
+      "commit": "ba67e212be1197b84c1f1f6299488a10a3002713",
+      "tracked_clean": true
+    },
+    {
+      "name": "importGraph",
+      "commit": "d8823026ac7ef130c253089d95685f9877b95323",
+      "tracked_clean": true
+    },
+    {
+      "name": "proofwidgets",
+      "commit": "a8acbfd87375ff4abe14ce09db5b7664d383bc7f",
+      "tracked_clean": true
+    },
+    {
+      "name": "aesop",
+      "commit": "18889deb9e83ea7420ef51c160d6f88552e744e3",
+      "tracked_clean": true
+    },
+    {
+      "name": "Qq",
+      "commit": "507746ab8f4b643ccdacb2ec4cdb5853fa9f8ab3",
+      "tracked_clean": true
+    },
+    {
+      "name": "batteries",
+      "commit": "d54dddc581e08be364c278052863524bff7a99a9",
+      "tracked_clean": true
+    },
+    {
+      "name": "Cli",
+      "commit": "ab3a82db9fea14cf0fd7f5a2de650f4b534640af",
+      "tracked_clean": true
+    }
+  ],
+  "source_preservation": [
+    {
+      "id": "WOWII101",
+      "proof_code_preserved": true,
+      "allowed_changes": [
+        "imports and metadata",
+        "comments/diagnostics",
+        "deprecated tactic lemma aliases"
+      ]
+    },
+    {
+      "id": "WOWII20",
+      "proof_code_preserved": true,
+      "allowed_changes": [
+        "imports and metadata",
+        "comments/diagnostics",
+        "deprecated tactic lemma aliases"
+      ]
+    },
+    {
+      "id": "WOWII7",
+      "proof_code_preserved": true,
+      "allowed_changes": [
+        "imports and metadata",
+        "comments/diagnostics",
+        "deprecated tactic lemma aliases"
+      ]
+    }
+  ],
+  "shared_support": [
+    {
+      "file": "LeanGraphProofs/Support/Induced.lean",
+      "sha256": "6a3d78103691e481ee6b0db819dac8f0b5678885720628cd4859d51aa886f798",
+      "original_sha256": "2c515ac1926e524b2b7e28cc65481b4bf28ee274a26e29491d8cb8612cf83c7a",
+      "code_preserved": true
+    },
+    {
+      "file": "LeanGraphProofs/Support/Independence.lean",
+      "sha256": "98be56012a8f08bfa6e8e662ffdb2bf7035d760b30b6c6b5fef5506ac935d075",
+      "original_sha256": "77be44c935e77acd806e0bad959cb6124a2d2529e628133c35c8e5fa834ae4f1",
+      "code_preserved": true
+    },
+    {
+      "file": "LeanGraphProofs/Support/SpanningTree.lean",
+      "sha256": "cc18b633fd52aad4d5ab7871d48b504e3bc8577ab07bafcac84a063b5c3404be",
+      "original_sha256": "358339430e2f0b7cb09aaa64ee2498445635823ecff23524fc9f35a3b6555b2e",
+      "code_preserved": true
+    }
+  ],
+  "root_library_build": {
+    "exit_code": 0,
+    "sha256": "18ffbee74fef41e17b1e9ef880c43f88d54e53030f545f9cb9bb228c0a254fec",
+    "log": "REUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.WOWII101\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.Induced\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.WOWII20\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.Independence\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.Support.SpanningTree\nREUSE SAME-AUDIT VERIFIED BUILD LeanGraphProofs.WOWII7\nDIRECT PINNED BUILD LeanGraphProofs\n"
+  }
+}
