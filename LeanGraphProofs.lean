@@ -1,3 +1,6 @@
 import LeanGraphProofs.WOWII101
 import LeanGraphProofs.WOWII20
 import LeanGraphProofs.WOWII7
+import LeanGraphProofs.WOWII32
+import LeanGraphProofs.WOWII34
+import LeanGraphProofs.WOWII291

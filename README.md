@@ -7,6 +7,9 @@ Lean formalizations of known results from *Written on the Wall II*, by **Wentao 
 | WOWII 101 | Hajnal independence-core inequality | [WOWII101.lean](LeanGraphProofs/WOWII101.lean) | [Proof](proofs/WOWII101/PROOF.md) · [Sources](proofs/WOWII101/SOURCE.md) | [#7115](https://github.com/google-deepmind/formal-conjectures/pull/7115) |
 | WOWII 20 | Induced bipartite subgraph bound | [WOWII20.lean](LeanGraphProofs/WOWII20.lean) | [Proof](proofs/WOWII20/PROOF.md) · [Sources](proofs/WOWII20/SOURCE.md) | [#7117](https://github.com/google-deepmind/formal-conjectures/pull/7117) |
 | WOWII 7 | Spanning-tree leaf bound | [WOWII7.lean](LeanGraphProofs/WOWII7.lean) | [Proof](proofs/WOWII7/PROOF.md) · [Sources](proofs/WOWII7/SOURCE.md) | [#7119](https://github.com/google-deepmind/formal-conjectures/pull/7119) |
+| WOWII 32 | Known five-vertex path counterexample; independent formalization | [WOWII32.lean](LeanGraphProofs/WOWII32.lean) | [Proof](proofs/WOWII32/PROOF.md) · [Sources](proofs/WOWII32/SOURCE.md) | Submission pending |
+| WOWII 34 | Known 39-vertex tree counterexample | [WOWII34.lean](LeanGraphProofs/WOWII34.lean) | [Proof](proofs/WOWII34/PROOF.md) · [Sources](proofs/WOWII34/SOURCE.md) | Submission pending |
+| WOWII 291 | Known twelve-vertex counterexample | [WOWII291.lean](LeanGraphProofs/WOWII291.lean) | [Proof](proofs/WOWII291/PROOF.md) · [Sources](proofs/WOWII291/SOURCE.md) | Submission pending |
 
 Each problem has one canonical Lean file and one proof/source pair. Shared definitions live in `LeanGraphProofs/Support/`. [Verification](verification/README.md) records fresh compilation, Comparator statement/definition comparison and kernel replay.
 

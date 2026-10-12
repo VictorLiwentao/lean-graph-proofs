@@ -30,5 +30,5 @@ def build(name):
 build('LeanGraphProofs')
 check = root / '.lake/AxiomCheck.lean'
 check.write_text('import LeanGraphProofs\n' + ''.join(
-    f'#print axioms WOWII{n}.conjecture{n}\n' for n in [101, 20, 7]))
+    f'#print axioms {name}\n' for name in ['WOWII101.conjecture101', 'WOWII20.conjecture20', 'WOWII7.conjecture7', 'WOWII32.conjecture32', 'WOWII34.conjecture34', 'ResearchWOWII291.conjecture291']))
 subprocess.run([lean, str(check)], cwd=root, env=env, check=True)

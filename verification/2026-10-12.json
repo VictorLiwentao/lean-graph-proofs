@@ -1,0 +1,859 @@
+{
+  "date": "2026-10-12T21:54:29.957535+00:00",
+  "all_passed": true,
+  "upstream_statement_commit": "1a339399f9d49d5f086e78851a372d38ded8c427",
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "targets": [
+    {
+      "id": "WOWII32",
+      "status": "passed",
+      "proof_file": "LeanGraphProofs/WOWII32.lean",
+      "proof_sha256": "3eee0eb4983a716b1d08c2b2c446971c13f7071a25ecefcf60cebb892668e753",
+      "challenge_source": "/-\nCopyright 2026 The Formal Conjectures Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    https://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n-/\nmodule\n\npublic import FormalConjecturesUtil\n\n/-!\n# Written on the Wall II - Conjecture 32\n\n*Reference:*\n[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n-/\n\n@[expose] public section\n\nnamespace WrittenOnTheWallII.GraphConjecture32\n\nopen SimpleGraph\n\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n\n/--\nWOWII [Conjecture 32](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\nFor a simple connected graph $G$,\n$\\operatorname{path}(G) \\ge \\operatorname{dist}\\_{\\operatorname{avg}}(A) + 0.5 \\cdot \\operatorname{ecc}\\_{\\operatorname{avg}}(M)$,\nwhere $\\operatorname{path}(G)$ is the number of vertices of a largest induced path of $G$,\n$A$ is the set of minimum-degree vertices, $M$ is the set of maximum-degree vertices,\n$\\operatorname{dist}\\_{\\operatorname{avg}}(A)$ is the average of all nonzero distances\n$\\operatorname{dist}\\_G(u, v)$ with $u, v \\in A$ (i.e. the average over ordered pairs of\ndistinct vertices of $A$; it is taken to be $0$ when $A$ has fewer than two vertices), and\n$\\operatorname{ecc}\\_{\\operatorname{avg}}(M)$ is the average eccentricity of the vertices\nin $M$.\n\nThe conjecture is false, the authors present a counterexample: \"The path on 5 vertices\nis a counterexample, path = 5, distavg(A) = 4 and the average of eccentricity of maximum\ndegree vertices is 8/3.\"\n-/\n@[category research solved, AMS 5]\ntheorem conjecture32 : answer(False) \u2194\n    \u2200 (\u03b1 : Type) [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n      (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected),\n      let A : Finset \u03b1 := Finset.univ.filter (fun v => G.degree v = G.minDegree)\n      let M : Finset \u03b1 := Finset.univ.filter (fun v => G.degree v = G.maxDegree)\n      let distavgA : \u211d := (\u2211 p \u2208 A.offDiag, (G.dist p.1 p.2 : \u211d)) / (A.offDiag.card : \u211d)\n      let eccavg (S : Finset \u03b1) : \u211d := (\u2211 v \u2208 S, (G.eccent v).toNat) / (S.card : \u211d)\n      distavgA + (1 / 2 : \u211d) * eccavg M \u2264 (path G : \u211d) := by\n  sorry\n\n-- Sanity checks\n\n/-- The `path G` invariant cast to \u211d is nonneg. -/\n@[category test, AMS 5]\nexample (G : SimpleGraph (Fin 3)) : 0 \u2264 (path G : \u211d) := Nat.cast_nonneg _\n\n/-- In `K\u2083`, the max degree is 2. -/\n@[category test, AMS 5]\nexample : (\u22a4 : SimpleGraph (Fin 3)).maxDegree = 2 := by decide\n\nend WrittenOnTheWallII.GraphConjecture32\n",
+      "solution_wrapper": "/-\nCopyright 2026 Wentao Li. Released under Apache 2.0.\n-/\nimport LeanGraphProofs.WOWII32\nimport FormalConjecturesUtil.Answer\n\n/-! Exact frozen WOWII32 comparison bridge; the admitted target is not imported. -/\n\nnamespace WrittenOnTheWallII.GraphConjecture32\nopen SimpleGraph\n\nset_option linter.unusedVariables false in\ntheorem conjecture32 : answer(False) \u2194\n    \u2200 (\u03b1 : Type) [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n      (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected),\n      let A : Finset \u03b1 := Finset.univ.filter (fun v => G.degree v = G.minDegree)\n      let M : Finset \u03b1 := Finset.univ.filter (fun v => G.degree v = G.maxDegree)\n      let distavgA : \u211d := (\u2211 p \u2208 A.offDiag, (G.dist p.1 p.2 : \u211d)) / (A.offDiag.card : \u211d)\n      let eccavg (S : Finset \u03b1) : \u211d := (\u2211 v \u2208 S, (G.eccent v).toNat) / (S.card : \u211d)\n      distavgA + (1 / 2 : \u211d) * eccavg M \u2264 (path G : \u211d) := by\n  exact WOWII32.conjecture32\n\n#print axioms conjecture32\nend WrittenOnTheWallII.GraphConjecture32\n",
+      "config": {
+        "challenge_module": "Challenge",
+        "solution_module": "Solution",
+        "build_modules": [
+          "Challenge",
+          "Solution"
+        ],
+        "theorem_names": [
+          "WrittenOnTheWallII.GraphConjecture32.conjecture32"
+        ],
+        "permitted_axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "audit": {
+        "config": "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/compare.json",
+        "started_utc": "2026-10-12T21:41:36.276432+00:00",
+        "compiler": "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "status": "passed",
+        "steps": [
+          {
+            "name": "Compile Challenge",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "-Dpp.unicode.fun=true",
+              "-DautoImplicit=false",
+              "-DrelaxedAutoImplicit=false",
+              "-o",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/Challenge.olean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/Challenge.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Compile Solution",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "-Dpp.unicode.fun=true",
+              "-DautoImplicit=false",
+              "-DrelaxedAutoImplicit=false",
+              "-DwarningAsError=true",
+              "-o",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/Solution.olean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/Solution.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Export challenge",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/exports/compare/challengeExport.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Export solution",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/exports/compare/solutionExport.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Compare types, definitions, axioms and replay kernel",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/exports/compare/Replay.lean"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "log": "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/compare.log",
+        "sources": {
+          "Challenge": "67a4f18e481a29ea0ebd69b580d22428cb09900b423b00e811a0d182d8cad74d",
+          "Solution": "34d4e5c9408f866bf8bb11c5fba55058129af38dea33db63d1ad640925c27a3b"
+        },
+        "challenge_export": {
+          "bytes": 33787654,
+          "sha256": "ab071c2fb9afc4d47417fd48befc7bf001d9f70053969094d2f41bacab2b9e16"
+        },
+        "solution_export": {
+          "bytes": 45816038,
+          "sha256": "21baee5c0754cb41372afec75a617702c473e05db047efdde0e87b7b80e2a6bd"
+        },
+        "duration_seconds": 134.92,
+        "kernel_accepts": true,
+        "comparator_accepts": true
+      },
+      "log": "Compile Challenge\n/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII32/Challenge.lean:53:8: warning: declaration uses `sorry`\nCompile Solution\n'WrittenOnTheWallII.GraphConjecture32.conjecture32' depends on axioms: [propext, Classical.choice, Quot.sound]\nExport challenge\nExport solution\nCompare types, definitions, axioms and replay kernel\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!\n"
+    },
+    {
+      "id": "WOWII34",
+      "status": "passed",
+      "proof_file": "LeanGraphProofs/WOWII34.lean",
+      "proof_sha256": "6775577fc3c55b45341f0b90df5bfcf105f250b47eb656b407db39f8b9f22864",
+      "challenge_source": "/-\nCopyright 2025 The Formal Conjectures Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    https://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n-/\nmodule\n\npublic import FormalConjecturesUtil\n\n/-!\n# Written on the Wall II - Conjecture 34\n\n*Reference:*\n[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n-/\n\n@[expose] public section\n\nnamespace WrittenOnTheWallII.GraphConjecture34\n\nopen SimpleGraph\n\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n\n/--\nWOWII [Conjecture 34](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\nFor a simple connected graph $G$,\n$\\operatorname{path}(G) \\ge \\lceil \\operatorname{dist}\\_{\\operatorname{avg}}(C, V)\n+ \\operatorname{dist}\\_{\\operatorname{avg}}(M, V) \\rceil$,\nwhere $\\operatorname{path}(G)$ is the number of vertices of a largest induced path of $G$,\n$C$ is the set of center vertices (those with minimum eccentricity), $M$ is the set of\nmaximum-degree vertices, and $\\operatorname{dist}\\_{\\operatorname{avg}}(S, V)$ is the average\nof all nonzero distances $\\operatorname{dist}\\_G(s, v)$ with $s \\in S$ and $v \\in V$.\n\nThe conjecture is false. Let $G$ be the tree on $39$ vertices formed by a vertex with three\npendant leaves, joined by a path of five edges to the root of a perfect binary tree of depth\nfour. Then $\\operatorname{path}(G) = 11$, while $C$ and $M$ are singletons whose distance sums\nare $154$ and $266$, so the bound is $\\lceil (154 + 266) / 38 \\rceil = 12$.\n-/\n@[category research solved, AMS 5]\ntheorem conjecture34 :\n  answer(False) \u2194\n    \u2200 (\u03b1 : Type) [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n      (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected),\n      let C : Set \u03b1 := center G\n      let M : Set \u03b1 := {v | G.degree v = G.maxDegree}\n      let distAvg (S : Set \u03b1) : \u211d :=\n        open scoped Classical in\n        let pairs := (S.toFinset \u00d7\u02e2 Finset.univ).filter (fun p => G.dist p.1 p.2 \u2260 0)\n        (\u2211 p \u2208 pairs, (G.dist p.1 p.2 : \u211d)) / pairs.card\n      Int.ceil (distAvg C + distAvg M) \u2264 (path G : \u2124) := by\n  sorry\n\n-- Sanity checks\n\n/-- The `path G` invariant is nonneg when cast to \u2124. -/\n@[category test, AMS 5]\nexample (G : SimpleGraph (Fin 3)) : 0 \u2264 (path G : \u2124) := Int.natCast_nonneg _\n\n/-- The edgeless graph on 3 vertices has no edges. -/\n@[category test, AMS 5]\nexample : (\u22a5 : SimpleGraph (Fin 3)).edgeFinset.card = 0 := by simp\n\nend WrittenOnTheWallII.GraphConjecture34\n",
+      "solution_wrapper": "/-\nCopyright 2026 Wentao Li. Released under Apache 2.0.\n-/\nimport LeanGraphProofs.WOWII34\nimport FormalConjecturesUtil.Answer\n\n/-! Exact frozen WOWII34 bridge; the admitted original is not imported. -/\n\nnamespace WrittenOnTheWallII.GraphConjecture34\nopen SimpleGraph\n\nset_option linter.unusedVariables false in\ntheorem conjecture34 :\n  answer(False) \u2194\n    \u2200 (\u03b1 : Type) [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n      (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (h : G.Connected),\n      let C : Set \u03b1 := center G\n      let M : Set \u03b1 := {v | G.degree v = G.maxDegree}\n      let distAvg (S : Set \u03b1) : \u211d :=\n        open scoped Classical in\n        let pairs := (S.toFinset \u00d7\u02e2 Finset.univ).filter (fun p => G.dist p.1 p.2 \u2260 0)\n        (\u2211 p \u2208 pairs, (G.dist p.1 p.2 : \u211d)) / pairs.card\n      Int.ceil (distAvg C + distAvg M) \u2264 (path G : \u2124) := by\n  exact WOWII34.conjecture34\n\n#print axioms conjecture34\nend WrittenOnTheWallII.GraphConjecture34\n",
+      "config": {
+        "challenge_module": "Challenge",
+        "solution_module": "Solution",
+        "build_modules": [
+          "Challenge",
+          "Solution"
+        ],
+        "theorem_names": [
+          "WrittenOnTheWallII.GraphConjecture34.conjecture34"
+        ],
+        "permitted_axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "audit": {
+        "config": "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/compare.json",
+        "started_utc": "2026-10-12T21:43:51.198572+00:00",
+        "compiler": "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "status": "passed",
+        "steps": [
+          {
+            "name": "Compile Challenge",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "-Dpp.unicode.fun=true",
+              "-DautoImplicit=false",
+              "-DrelaxedAutoImplicit=false",
+              "-o",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/Challenge.olean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/Challenge.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Compile Solution",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "-Dpp.unicode.fun=true",
+              "-DautoImplicit=false",
+              "-DrelaxedAutoImplicit=false",
+              "-DwarningAsError=true",
+              "-o",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/Solution.olean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/Solution.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Export challenge",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/exports/compare/challengeExport.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Export solution",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/exports/compare/solutionExport.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Compare types, definitions, axioms and replay kernel",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/exports/compare/Replay.lean"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "log": "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/compare.log",
+        "sources": {
+          "Challenge": "e64f5b5348738b259593939618d888afb1f028692573255519ec834e3ae0e644",
+          "Solution": "c849ea958678cb8c033404aeed7eff2d4adc95ff71b507a7d728c3db28e269f3"
+        },
+        "challenge_export": {
+          "bytes": 35715748,
+          "sha256": "ebfe93e5f355f8d95fdd6cd50e59426ba0fd5ae163dad91a24225820f78a111b"
+        },
+        "solution_export": {
+          "bytes": 55591991,
+          "sha256": "ff275eef9c868c37885b0429e8fb935caf6dc68b5aa949b90885af571883b77c"
+        },
+        "duration_seconds": 182.05,
+        "kernel_accepts": true,
+        "comparator_accepts": true
+      },
+      "log": "Compile Challenge\n/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII34/Challenge.lean:52:8: warning: declaration uses `sorry`\nCompile Solution\n'WrittenOnTheWallII.GraphConjecture34.conjecture34' depends on axioms: [propext, Classical.choice, Quot.sound]\nExport challenge\nExport solution\nCompare types, definitions, axioms and replay kernel\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!\n"
+    },
+    {
+      "id": "WOWII291",
+      "status": "passed",
+      "proof_file": "LeanGraphProofs/WOWII291.lean",
+      "proof_sha256": "96fc6995d9de4da3772b1230a063dc5cf49832cb8be6dfeb43a67b4c9b1a87a5",
+      "challenge_source": "/-\nCopyright 2026 The Formal Conjectures Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    https://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n-/\nmodule\n\npublic import FormalConjecturesUtil\n\n/-!\n# Written on the Wall II - Conjecture 291\n\n*Reference:*\n[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\n## Definitions\n\nFor a vertex $v$ in a graph $G$, **$T(v)$** is the number of triangles (3-cliques)\nincident to $v$, i.e., the number of 3-element cliques in $G$ that contain $v$.\n\nThe **triangle-frequency of the minimum** is the number of vertices that achieve the\nminimum value of $T(v)$.\n\n**$k$** is the **first step in the Havel\u2013Hakimi process at which a zero appears**.\nConcretely, starting from the descending degree sequence $s_0$ of $G$, we set\n$s_{i+1} = \\mathrm{havelHakimiStep}\\, s_i$ and let $k$ be the least $i \\ge 0$ such\nthat $s_i$ contains a zero entry (or, vacuously, has been emptied entirely). Since\neach step is sorted descending and never increases entries, this is equivalent\nto the last (smallest) entry of $s_i$ being $0$, or $s_i$ being $[]$.\n\nThis is **strictly weaker** than $n - \\mathrm{residue}(G)$: $n - \\mathrm{residue}(G)$\nis the *total* number of reduction steps until *every* entry is zero, whereas $k$\nonly requires that *some* entry has hit zero \u2014 and a $0$ typically appears well\nbefore the all-zero state is reached.\n\n**Conjecture 291:** For a simple connected graph $G$ with $n > 2$,\n$\\gamma_t(G) \\le k + \\mathrm{frequency}(t_{\\min}(v))$\nwhere $\\gamma_t(G)$ is the total domination number, $k$ is the Havel-Hakimi zero\nstep, and $\\mathrm{frequency}(t_{\\min}(v))$ is the number of vertices achieving\nthe minimum triangle count.\n\nThe conjecture is **false**: on July 23, 2026, Zyad Tamimi sent a 12-vertex\ncounterexample with $\\gamma_t(G) = 4$, $\\mathrm{frequency}(t_{\\min}(v)) = 1$ and $k = 2$,\nand the source now lists Conjecture 291 as refuted.\n-/\n\n@[expose] public section\n\nnamespace WrittenOnTheWallII.GraphConjecture291\n\nopen SimpleGraph\n\nvariable {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n\n/-- The minimum number of triangles incident to any vertex, over all vertices of $G$. -/\nnoncomputable def minTrianglesAtVertex (G : SimpleGraph \u03b1) [DecidableRel G.Adj] : \u2115 :=\n  Finset.univ.inf' Finset.univ_nonempty (numTrianglesAtVertex G)\n\n/-- The number of vertices achieving the minimum triangle count. -/\nnoncomputable def freqMinTriangles (G : SimpleGraph \u03b1) [DecidableRel G.Adj] : \u2115 :=\n  (Finset.univ.filter (fun v => numTrianglesAtVertex G v = minTrianglesAtVertex G)).card\n\n/-- The descending degree sequence of $G$, used as the starting point of the\nHavel-Hakimi reduction.\n\nUses `Finset.univ.val.map` (multiset, duplicate-preserving) rather than\n`Finset.univ.image` (set, deduplicating), so that e.g. $C_4$ produces\n$[2, 2, 2, 2]$ rather than $[2]$. -/\nnoncomputable def descDegreeSequence (G : SimpleGraph \u03b1) [DecidableRel G.Adj] : List \u2115 :=\n  (Finset.univ.val.map (fun v : \u03b1 => G.degree v)).sort (\u00b7 \u2265 \u00b7)\n\n/-- The Havel-Hakimi sequence of iterates: `s i` is the result of applying\n`havelHakimiStep` $i$ times to the descending degree sequence of $G$. -/\nnoncomputable def havelHakimiIterate (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (i : \u2115) :\n    List \u2115 :=\n  (havelHakimiStep)^[i] (descDegreeSequence G)\n\n/-- The first step $i$ (counting from $0$) at which a zero appears in the\nHavel-Hakimi reduction of the descending degree sequence of $G$, or in which\nthe sequence has been emptied. We use `sInf` over the set of such $i$ so the\ndefinition is well-defined for every graph: in particular, when $G$ is a\nconnected graph with $n \\ge 2$ the minimum degree at iteration $0$ is at least\n$1$, so the first zero only appears at some $i \\ge 1$; and since each step\nstrictly shortens the list (or empties it), at the latest by $i = n$ the\nsequence is empty and the predicate holds vacuously.\n\nThis is the WOWII $k$ of Conjecture 291, which is the **first** step at which a\nzero appears \u2014 typically strictly less than $n - \\mathrm{residue}(G)$ (which is\nthe *total* number of reduction steps to reach the all-zero state). -/\nnoncomputable def havelHakimiZeroStep (G : SimpleGraph \u03b1) [DecidableRel G.Adj] : \u2115 :=\n  sInf {i | 0 \u2208 havelHakimiIterate G i \u2228 havelHakimiIterate G i = []}\n\n/--\nWOWII [Conjecture 291](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)\n\nFor a simple connected graph $G$ with $n > 2$,\n$\\gamma_t(G) \\le k + \\mathrm{frequency}(t_{\\min}(v))$\nwhere:\n\n- $\\gamma_t(G)$ is the total domination number,\n- $k$ is the first step in which a zero appears in the Havel-Hakimi process,\n- $\\mathrm{frequency}(t_{\\min}(v))$ is the number of vertices achieving the\n  minimum triangle count.\n\nThis is false: the source records a 12-vertex counterexample by Zyad Tamimi (July 23, 2026)\nwith $\\gamma_t(G) = 4 > 2 + 1 = k + \\mathrm{frequency}(t_{\\min}(v))$.\n\nThe hypothesis $n > 2$ is stated in the source's full list of conjectures (as for the\nneighbouring Conjectures 290, 292 and 293) but omitted on its list of open conjectures;\nthe counterexample has $12$ vertices, so it refutes both readings.\n-/\n@[category research solved, AMS 5]\ntheorem conjecture291 : answer(False) \u2194\n    \u2200 (\u03b1 : Type) [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n      (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (_h : G.Connected) (_hn : 2 < Fintype.card \u03b1),\n      G.totalDominationNumber \u2264 havelHakimiZeroStep G + freqMinTriangles G := by\n  sorry\n\n-- Sanity checks\n\n/-- In $K_3$, every vertex is in exactly $1$ triangle. -/\n@[category test, AMS 5]\nexample : numTrianglesAtVertex (\u22a4 : SimpleGraph (Fin 3)) (0 : Fin 3) = 1 := by\n  unfold numTrianglesAtVertex\n  decide\n\n/-- In the path $P_3$, vertex $1$ has no triangles incident to it\n($0$ and $2$ are neighbors of $1$ but not adjacent to each other). -/\n@[category test, AMS 5]\nexample : numTrianglesAtVertex\n    (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) (1 : Fin 3) = 0 := by\n  unfold numTrianglesAtVertex\n  decide\n\n/-- In $K_3$, the minimum triangle count is $1$ (every vertex has $1$ triangle). -/\n@[category test, AMS 5]\nexample : minTrianglesAtVertex (\u22a4 : SimpleGraph (Fin 3)) = 1 := by\n  unfold minTrianglesAtVertex numTrianglesAtVertex\n  decide\n\n/-- `havelHakimiZeroStep` is nonneg. -/\n@[category test, AMS 5]\nexample (G : SimpleGraph (Fin 4)) [DecidableRel G.Adj] : 0 \u2264 havelHakimiZeroStep G :=\n  Nat.zero_le _\n\nend WrittenOnTheWallII.GraphConjecture291\n",
+      "solution_wrapper": "/-\nCopyright 2026 Wentao Li. Released under Apache 2.0.\n-/\nimport LeanGraphProofs.WOWII291\nimport FormalConjecturesUtil.Answer\n\n/-! Exact frozen WOWII291 bridge; admitted upstream target is not imported. -/\n\nnamespace WrittenOnTheWallII.GraphConjecture291\nopen SimpleGraph\n\ntheorem conjecture291 : answer(False) \u2194\n    \u2200 (\u03b1 : Type) [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1]\n      (G : SimpleGraph \u03b1) [DecidableRel G.Adj] (_h : G.Connected) (_hn : 2 < Fintype.card \u03b1),\n      G.totalDominationNumber \u2264 havelHakimiZeroStep G + freqMinTriangles G := by\n  exact ResearchWOWII291.conjecture291\n\n#print axioms conjecture291\nend WrittenOnTheWallII.GraphConjecture291\n",
+      "config": {
+        "challenge_module": "Challenge",
+        "solution_module": "Solution",
+        "build_modules": [
+          "Challenge",
+          "Solution"
+        ],
+        "theorem_names": [
+          "WrittenOnTheWallII.GraphConjecture291.conjecture291"
+        ],
+        "permitted_axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "audit": {
+        "config": "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/compare.json",
+        "started_utc": "2026-10-12T21:52:37.453774+00:00",
+        "compiler": "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "status": "passed",
+        "steps": [
+          {
+            "name": "Compile Challenge",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "-Dpp.unicode.fun=true",
+              "-DautoImplicit=false",
+              "-DrelaxedAutoImplicit=false",
+              "-o",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/Challenge.olean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/Challenge.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Compile Solution",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "-Dpp.unicode.fun=true",
+              "-DautoImplicit=false",
+              "-DrelaxedAutoImplicit=false",
+              "-DwarningAsError=true",
+              "-o",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/Solution.olean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/Solution.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Export challenge",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/exports/compare/challengeExport.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Export solution",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/exports/compare/solutionExport.lean"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "Compare types, definitions, axioms and replay kernel",
+            "command": [
+              "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+              "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/exports/compare/Replay.lean"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "log": "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/compare.log",
+        "sources": {
+          "Challenge": "25debbbf2079df1f3fa51455f186a15519ca11f6a6f09a6e43b076ce0120e8f6",
+          "Solution": "d1e3a69721b903585fbe70482bbd3ae048bbfdae5f233537e0eba592d7c0b33c"
+        },
+        "challenge_export": {
+          "bytes": 13590779,
+          "sha256": "71801c5977e856b8273cf2f118c0969b2bc1617ff9dce043af5569be7f4dea2e"
+        },
+        "solution_export": {
+          "bytes": 15874510,
+          "sha256": "376bd0b0653002905f5ca9d1d3b3be2077abf88711ff006740118de1b91d1b9b"
+        },
+        "duration_seconds": 105.22,
+        "kernel_accepts": true,
+        "comparator_accepts": true
+      },
+      "log": "Compile Challenge\n/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/reviews/WOWII291/Challenge.lean:123:8: warning: declaration uses `sorry`\nCompile Solution\n'WrittenOnTheWallII.GraphConjecture291.conjecture291' depends on axioms: [propext, Classical.choice, Quot.sound]\nExport challenge\nExport solution\nCompare types, definitions, axioms and replay kernel\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!\n"
+    }
+  ],
+  "method": "Fresh strict direct compilation under Lean 4.34.0-rc2 and DeepMind Lean 4.33.1; final published source checked against byte-identical DeepMind challenges by Comparator on 4.33.1, with axiom whitelist and fresh built-in kernel replay. No external kernel or official Linux sandbox.",
+  "builds": {
+    "33": {
+      "toolchain": "4.33.1",
+      "sources": {
+        "LeanGraphProofs.Support.Connectivity": "272d4cb0ceafdc85b592b7e75677a00635189cfb544c1a5a5bf9dbc76f887854",
+        "LeanGraphProofs.Support.VertexDistance": "81f2e62ca9b8b4634b2dce4006745b7b314ac203ef407b97cfc4d6709a15a700",
+        "LeanGraphProofs.WOWII32": "3eee0eb4983a716b1d08c2b2c446971c13f7071a25ecefcf60cebb892668e753",
+        "LeanGraphProofs.WOWII34": "6775577fc3c55b45341f0b90df5bfcf105f250b47eb656b407db39f8b9f22864",
+        "LeanGraphProofs.Support.Degrees": "94a1ecb8034b72b7d881defbafdb26a95b7dff8ef2193e740e97219860a8a458",
+        "LeanGraphProofs.Support.Domination": "2ad9987bcfa8b190f79666879264310afdaaddeb733b84def6510f8841c8fc5f",
+        "LeanGraphProofs.Support.Residue": "c704a79fdea5d44398fed71a2adda0ce86c768fb6c2ac2847012708d624bf1f8",
+        "LeanGraphProofs.WOWII291": "96fc6995d9de4da3772b1230a063dc5cf49832cb8be6dfeb43a67b4c9b1a87a5"
+      },
+      "steps": [
+        {
+          "module": "LeanGraphProofs.Support.Connectivity",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/Connectivity.olean",
+            "LeanGraphProofs/Support/Connectivity.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.VertexDistance",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/VertexDistance.olean",
+            "LeanGraphProofs/Support/VertexDistance.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII32",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/WOWII32.olean",
+            "LeanGraphProofs/WOWII32.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII34",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/WOWII34.olean",
+            "LeanGraphProofs/WOWII34.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Degrees",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/Degrees.olean",
+            "LeanGraphProofs/Support/Degrees.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Domination",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/Domination.olean",
+            "LeanGraphProofs/Support/Domination.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Residue",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/Residue.olean",
+            "LeanGraphProofs/Support/Residue.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII291",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/WOWII291.olean",
+            "LeanGraphProofs/WOWII291.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Degrees",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/Degrees.olean",
+            "LeanGraphProofs/Support/Degrees.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Domination",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/Domination.olean",
+            "LeanGraphProofs/Support/Domination.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Residue",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/Support/Residue.olean",
+            "LeanGraphProofs/Support/Residue.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII291",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph33/lib/LeanGraphProofs/WOWII291.olean",
+            "LeanGraphProofs/WOWII291.lean"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "log": "Compile LeanGraphProofs.Support.Connectivity\nCompile LeanGraphProofs.Support.VertexDistance\nCompile LeanGraphProofs.WOWII32\nCompile LeanGraphProofs.WOWII34\nCompile LeanGraphProofs.Support.Degrees\nCompile LeanGraphProofs.Support.Domination\nCompile LeanGraphProofs.Support.Residue\nCompile LeanGraphProofs.WOWII291\n'WOWII32.conjecture32' depends on axioms: [propext, Classical.choice, Quot.sound]\n'WOWII34.conjecture34' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ResearchWOWII291.conjecture291' depends on axioms: [propext, Classical.choice, Quot.sound]\nCompile LeanGraphProofs.Support.Degrees\nCompile LeanGraphProofs.Support.Domination\nCompile LeanGraphProofs.Support.Residue\nCompile LeanGraphProofs.WOWII291\n'WOWII32.conjecture32' depends on axioms: [propext, Classical.choice, Quot.sound]\n'WOWII34.conjecture34' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ResearchWOWII291.conjecture291' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    "34": {
+      "toolchain": "4.34.0-rc2",
+      "sources": {
+        "LeanGraphProofs.WOWII101": "6743339486a683d1ac4f6615c7e688d67116a65f371028f5ae24c0f940ccd544",
+        "LeanGraphProofs.Support.Induced": "6a3d78103691e481ee6b0db819dac8f0b5678885720628cd4859d51aa886f798",
+        "LeanGraphProofs.WOWII20": "f6654f1ea33020e448ba7ce8034c527ce35df29e0db794bba7092cee47a9e23a",
+        "LeanGraphProofs.Support.Independence": "98be56012a8f08bfa6e8e662ffdb2bf7035d760b30b6c6b5fef5506ac935d075",
+        "LeanGraphProofs.Support.SpanningTree": "cc18b633fd52aad4d5ab7871d48b504e3bc8577ab07bafcac84a063b5c3404be",
+        "LeanGraphProofs.WOWII7": "2983e85abf8c3ca21c72f660ab0db24b6a878e958d1f95c5fff1d327fc46561f",
+        "LeanGraphProofs.Support.Connectivity": "272d4cb0ceafdc85b592b7e75677a00635189cfb544c1a5a5bf9dbc76f887854",
+        "LeanGraphProofs.Support.VertexDistance": "81f2e62ca9b8b4634b2dce4006745b7b314ac203ef407b97cfc4d6709a15a700",
+        "LeanGraphProofs.WOWII32": "3eee0eb4983a716b1d08c2b2c446971c13f7071a25ecefcf60cebb892668e753",
+        "LeanGraphProofs.WOWII34": "6775577fc3c55b45341f0b90df5bfcf105f250b47eb656b407db39f8b9f22864",
+        "LeanGraphProofs.Support.Degrees": "94a1ecb8034b72b7d881defbafdb26a95b7dff8ef2193e740e97219860a8a458",
+        "LeanGraphProofs.Support.Domination": "2ad9987bcfa8b190f79666879264310afdaaddeb733b84def6510f8841c8fc5f",
+        "LeanGraphProofs.Support.Residue": "c704a79fdea5d44398fed71a2adda0ce86c768fb6c2ac2847012708d624bf1f8",
+        "LeanGraphProofs.WOWII291": "96fc6995d9de4da3772b1230a063dc5cf49832cb8be6dfeb43a67b4c9b1a87a5",
+        "LeanGraphProofs": "583053839741316fcd3e6ab3034f200208c9d20aa05d5d1c20fb264c43085984"
+      },
+      "steps": [
+        {
+          "module": "LeanGraphProofs.WOWII101",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/WOWII101.olean",
+            "LeanGraphProofs/WOWII101.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Induced",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Induced.olean",
+            "LeanGraphProofs/Support/Induced.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII20",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/WOWII20.olean",
+            "LeanGraphProofs/WOWII20.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Independence",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Independence.olean",
+            "LeanGraphProofs/Support/Independence.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.SpanningTree",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/SpanningTree.olean",
+            "LeanGraphProofs/Support/SpanningTree.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII7",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/WOWII7.olean",
+            "LeanGraphProofs/WOWII7.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Connectivity",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Connectivity.olean",
+            "LeanGraphProofs/Support/Connectivity.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.VertexDistance",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/VertexDistance.olean",
+            "LeanGraphProofs/Support/VertexDistance.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII32",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/WOWII32.olean",
+            "LeanGraphProofs/WOWII32.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII34",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/WOWII34.olean",
+            "LeanGraphProofs/WOWII34.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Degrees",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Degrees.olean",
+            "LeanGraphProofs/Support/Degrees.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Domination",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Domination.olean",
+            "LeanGraphProofs/Support/Domination.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Residue",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Residue.olean",
+            "LeanGraphProofs/Support/Residue.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII291",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/WOWII291.olean",
+            "LeanGraphProofs/WOWII291.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs.olean",
+            "LeanGraphProofs.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Degrees",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Degrees.olean",
+            "LeanGraphProofs/Support/Degrees.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Domination",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Domination.olean",
+            "LeanGraphProofs/Support/Domination.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.Support.Residue",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/Support/Residue.olean",
+            "LeanGraphProofs/Support/Residue.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs.WOWII291",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs/WOWII291.olean",
+            "LeanGraphProofs/WOWII291.lean"
+          ],
+          "exit_code": 0
+        },
+        {
+          "module": "LeanGraphProofs",
+          "command": [
+            "/Users/wentaoli/.elan/toolchains/leanprover--lean4---v4.34.0-rc2/bin/lean",
+            "-DwarningAsError=true",
+            "-DautoImplicit=false",
+            "-DrelaxedAutoImplicit=false",
+            "-DmaxSynthPendingDepth=3",
+            "-o",
+            "/Users/wentaoli/.codex/worktrees/oeis-wowii-proof-publication/formal-conjectures/.publication/graph34/lib/LeanGraphProofs.olean",
+            "LeanGraphProofs.lean"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "log": "Compile LeanGraphProofs.WOWII101\nCompile LeanGraphProofs.Support.Induced\nCompile LeanGraphProofs.WOWII20\nCompile LeanGraphProofs.Support.Independence\nCompile LeanGraphProofs.Support.SpanningTree\nCompile LeanGraphProofs.WOWII7\nCompile LeanGraphProofs.Support.Connectivity\nCompile LeanGraphProofs.Support.VertexDistance\nCompile LeanGraphProofs.WOWII32\nCompile LeanGraphProofs.WOWII34\nCompile LeanGraphProofs.Support.Degrees\nCompile LeanGraphProofs.Support.Domination\nCompile LeanGraphProofs.Support.Residue\nCompile LeanGraphProofs.WOWII291\nCompile LeanGraphProofs\n'WOWII32.conjecture32' depends on axioms: [propext, Classical.choice, Quot.sound]\n'WOWII34.conjecture34' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ResearchWOWII291.conjecture291' depends on axioms: [propext, Classical.choice, Quot.sound]\nCompile LeanGraphProofs.Support.Degrees\nCompile LeanGraphProofs.Support.Domination\nCompile LeanGraphProofs.Support.Residue\nCompile LeanGraphProofs.WOWII291\nCompile LeanGraphProofs\n'WOWII32.conjecture32' depends on axioms: [propext, Classical.choice, Quot.sound]\n'WOWII34.conjecture34' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ResearchWOWII291.conjecture291' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    }
+  },
+  "comparator": {
+    "repository": "https://github.com/leanprover/comparator",
+    "commit": "ca04cfc72b550331658ec314bf47685281bfd4bf",
+    "lean4export_commit": "cacf989bd75f608700820f6afc595f32e7a99a4d",
+    "toolchain": "4.33.1",
+    "adaptation": "Python/direct-Lean orchestration with version-compatible exporter and Environment.replay; unchanged type/definition/axiom comparison, fresh environment replay and quotient primitive post-checks."
+  },
+  "source_preservation": {
+    "LeanGraphProofs/Support/Connectivity.lean": {
+      "source": "FormalConjecturesForMathlib/Combinatorics/SimpleGraph/Connectivity.lean",
+      "source_sha256": "187f90d068841805d03038f3bcf69b12a2fe423ab3f7865722fc0973fc762157",
+      "publication_sha256": "272d4cb0ceafdc85b592b7e75677a00635189cfb544c1a5a5bf9dbc76f887854",
+      "changes": "module packaging and import paths only"
+    },
+    "LeanGraphProofs/Support/VertexDistance.lean": {
+      "source": "FormalConjecturesForMathlib/Combinatorics/SimpleGraph/VertexDistance.lean",
+      "source_sha256": "954e1faf71edf0f245afe6a98894f9f0f5a954ea33934aa4b3c82d3b72221300",
+      "publication_sha256": "81f2e62ca9b8b4634b2dce4006745b7b314ac203ef407b97cfc4d6709a15a700",
+      "changes": "module packaging and import paths only"
+    },
+    "LeanGraphProofs/Support/Degrees.lean": {
+      "source": "FormalConjecturesForMathlib/Combinatorics/SimpleGraph/Degrees.lean",
+      "source_sha256": "94a1ecb8034b72b7d881defbafdb26a95b7dff8ef2193e740e97219860a8a458",
+      "publication_sha256": "94a1ecb8034b72b7d881defbafdb26a95b7dff8ef2193e740e97219860a8a458",
+      "changes": "none; byte-identical upstream source, including module visibility metadata"
+    },
+    "LeanGraphProofs/Support/Domination.lean": {
+      "source": "FormalConjecturesForMathlib/Combinatorics/SimpleGraph/Domination.lean",
+      "source_sha256": "2ad9987bcfa8b190f79666879264310afdaaddeb733b84def6510f8841c8fc5f",
+      "publication_sha256": "2ad9987bcfa8b190f79666879264310afdaaddeb733b84def6510f8841c8fc5f",
+      "changes": "none; byte-identical upstream source, including module visibility metadata"
+    },
+    "LeanGraphProofs/Support/Residue.lean": {
+      "source": "FormalConjecturesForMathlib/Combinatorics/SimpleGraph/Residue.lean",
+      "source_sha256": "c704a79fdea5d44398fed71a2adda0ce86c768fb6c2ac2847012708d624bf1f8",
+      "publication_sha256": "c704a79fdea5d44398fed71a2adda0ce86c768fb6c2ac2847012708d624bf1f8",
+      "changes": "none; byte-identical upstream source, including module visibility metadata"
+    },
+    "LeanGraphProofs/WOWII32.lean": {
+      "source": "research/coordination/reviews/WOWII32/WOWII32.lean",
+      "source_sha256": "c269bd43c61b07fc4bff8c5953c9d51017c81de2662aea170e51b9ce7713a728",
+      "publication_sha256": "3eee0eb4983a716b1d08c2b2c446971c13f7071a25ecefcf60cebb892668e753",
+      "changes": "imports, copyright/documentation, removal of repository category metadata, answer(False) notation expanded to False, axiom commands moved to verification script"
+    },
+    "LeanGraphProofs/WOWII34.lean": {
+      "source": "research/coordination/reviews/WOWII34/WOWII34.lean",
+      "source_sha256": "cf7ae9f3d98fbd0549424fa1081e9350db3d2bb47cd3181395843b34c93756f5",
+      "publication_sha256": "6775577fc3c55b45341f0b90df5bfcf105f250b47eb656b407db39f8b9f22864",
+      "changes": "imports, copyright/documentation, removal of repository category metadata, answer(False) notation expanded to False, axiom commands moved to verification script"
+    },
+    "LeanGraphProofs/WOWII291.lean": {
+      "source": "research/coordination/reviews/WOWII291/WOWII291.lean",
+      "source_sha256": "606ebb1da8fa536777fe85affcafae31401f95d2be79be882dc5c2d23538fe41",
+      "publication_sha256": "96fc6995d9de4da3772b1230a063dc5cf49832cb8be6dfeb43a67b4c9b1a87a5",
+      "changes": "imports, copyright/documentation, removal of repository category metadata, answer(False) notation expanded to False, axiom commands moved to verification script"
+    }
+  }
+}
