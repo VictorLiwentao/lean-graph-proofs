@@ -855,5 +855,25 @@
       "publication_sha256": "96fc6995d9de4da3772b1230a063dc5cf49832cb8be6dfeb43a67b4c9b1a87a5",
       "changes": "imports, copyright/documentation, removal of repository category metadata, answer(False) notation expanded to False, axiom commands moved to verification script"
     }
-  }
+  },
+  "deepmind_submissions": [
+    {
+      "target": "WOWII32",
+      "number": 7246,
+      "url": "https://github.com/google-deepmind/formal-conjectures/pull/7246",
+      "headRefOid": "2d23508a34e56b8833aeff80ea5623b7729415d8"
+    },
+    {
+      "target": "WOWII34",
+      "number": 7247,
+      "url": "https://github.com/google-deepmind/formal-conjectures/pull/7247",
+      "headRefOid": "61fe16c03152404173732bdccc4619895f3bd949"
+    },
+    {
+      "target": "WOWII291",
+      "number": 7248,
+      "url": "https://github.com/google-deepmind/formal-conjectures/pull/7248",
+      "headRefOid": "3726a061302ea0cee6cd1da83a6fe5284ad3f1b6"
+    }
+  ]
 }
