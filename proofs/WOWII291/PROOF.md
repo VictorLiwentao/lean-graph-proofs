@@ -1,6 +1,6 @@
 # WOWII 291: a twelve-vertex counterexample
 
-Formalization: Wentao Li, with OpenAI Codex assistance. The graph is the m=6 member of the family documented by `vulnix0x4` in [issue #4562](https://github.com/google-deepmind/formal-conjectures/issues/4562). The WOWII source credits Zyad Tamimi with the known refutation. We do not assert that the two recorded graphs are identical.
+The WOWII source credits **Zyad Tamimi** with the refutation. The formalization by **Wentao Li**, with OpenAI Codex assistance, certifies the `m = 6` member of the book-graph family documented by **`vulnix0x4`** in [issue #4562](https://github.com/google-deepmind/formal-conjectures/issues/4562).
 
 Use vertices a,b,x1,…,x6,p,q,r,leaf. Start with the book graph whose spine is ab and whose six pages are abxi. Add px1, pb, qx1, qa, qleaf, x2x3, rx2, and rx3. This is a connected graph on twelve vertices with 21 edges.
 

@@ -15,11 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Original statement formalization: The Formal Conjectures Authors, 2025.
-New independent Lean development and write-up: Wentao Li, 2026.
+Lean formalization and write-up: Wentao Li, 2026.
 Mathematics: N. Alon, J. Kahn and P. D. Seymour, Large induced degenerate
 subgraphs, Graphs and Combinatorics 3 (1987), 203–211, Theorem 1.3 and
 Corollary 1.4, specialized to induced bipartite subgraphs via 2-colorings.
-This is not a new mathematical discovery.
 AI assistance was used in the Lean development.
 -/
 import LeanGraphProofs.Support.Induced
@@ -27,10 +26,10 @@ import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Tactic
 
 /-!
-Independent Lean proof of
+Lean formalization of
 `WrittenOnTheWallII.GraphConjecture20.conjecture20`.
 
-This file does not import the frozen sorry theorem. It uses the existing
+This proof uses the original
 `b` / induced-bipartite API from `FormalConjecturesForMathlib` unchanged.
 -/
 
@@ -563,7 +562,7 @@ theorem conjecture20 [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj]
       simpa [deg_avg] using hCS
     linarith [hfrac, this, hsw, hsb]
 
-/-- Exact frozen type, independently of the sorry source module. -/
+/-- The original WOWII20 statement. -/
 example [Nontrivial α] (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected) :
     let deg_avg : ℝ := (∑ v : α, (G.degree v : ℝ)) / (Fintype.card α : ℝ)
     (Fintype.card α : ℝ) / (⌊deg_avg⌋ : ℝ) ≤ (b G : ℝ) :=

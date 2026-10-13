@@ -53,3 +53,7 @@ Use `lake exe cache get` and `lake --wfail build LeanGraphProofs` on a normal Le
 To repeat Comparator, materialize each target's `challenge_source`, `solution_wrapper` and `config` from `current.json` in an audit project alongside this library, and run the pinned Comparator against each config. The challenge's admitted theorem is intentional; the solution must have none. The report documents the exact adapted macOS run used here.
 
 For the October 12 targets, use the challenge, wrapper and config fields from `2026-10-12.json` with DeepMind's pinned Lean/Mathlib 4.33.1 and its original `FormalConjecturesUtil` support modules. Compile this repository's three corresponding public modules under that toolchain before running Comparator. The public repository itself remains pinned to v4.34.0-rc2.
+
+## October 12 attribution update
+
+The attribution update changes documentation and comments in WOWII 101, 20 and 7. Their proof code matches [the preceding revision](https://github.com/VictorLiwentao/lean-graph-proofs/tree/0294ee74bdaf89fd416d2958ba88ff086249ef84). These three modules and the combined library were freshly compiled with the pinned Lean v4.34.0-rc2 compiler and warnings as errors; each theorem's axiom list contains only `propext`, `Classical.choice`, and `Quot.sound`. Source hashes in the archived reports identify the versions checked in those audits.

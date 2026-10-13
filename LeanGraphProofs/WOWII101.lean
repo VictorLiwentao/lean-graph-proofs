@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Original statement formalization: The Formal Conjectures Authors.
-New independent Lean development and write-up: Wentao Li.
+Lean formalization and write-up: Wentao Li.
 Mathematics: András Hajnal (1965); independent-set form and core/corona
 language as in Levit–Mandrescu, arXiv:1101.4564, Corollaries 2.3–2.4.
 -/

@@ -2,7 +2,10 @@
 
 Mathematics: N. Alon, J. Kahn and P. D. Seymour, Large induced degenerate
 subgraphs, Graphs and Combinatorics 3 (1987), Theorem 1.3 and Corollary 1.4,
-specialized to induced 2-colorable vertex sets. Not a new mathematical result.
+specialized to induced 2-colorable vertex sets.
+
+Lean formalization and write-up: **Wentao Li** (2026), with AI assistance.
+Original Lean statement: **The Formal Conjectures Authors**.
 
 Frozen statement: for a finite nontrivial vertex type and a connected simple
 graph `G`, with `deg_avg = (∑_v deg(v))/n` a real average,

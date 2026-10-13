@@ -1,6 +1,6 @@
 # WOWII101 proof
 
-Known mathematics. This is a Lean formalization of Hajnal’s independence-core inequality, not a new theorem.
+Lean formalization of Hajnal’s independence-core inequality by **Wentao Li**, with AI assistance.
 
 ## Target
 
@@ -17,7 +17,7 @@ Natural division is floor division. The proof establishes the equivalent form `2
 - Mathematics: András Hajnal, *A theorem on k-saturated graphs*, Canad. J. Math. 17 (1965) 720–724.
 - Independent-set form, core/corona language, and Corollary 2.4: Levit–Mandrescu, arXiv:1101.4564.
 - Original Lean statement: The Formal Conjectures Authors.
-- New independent Lean development and write-up: Wentao Li.
+- Lean formalization and write-up: Wentao Li.
 - AI assistance was used in the Lean development and verification.
 
 ## Argument

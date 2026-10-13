@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Original statement formalization: The Formal Conjectures Authors, 2026.
-New independent Lean development and write-up: Wentao Li, 2026.
+Lean formalization and write-up: Wentao Li, 2026.
 Mathematics: Ermelinda DeLaVina, Siemion Fajtlowicz and Bill Waller,
 On Some Conjectures of Griggs and Graffiti, March 2002, revised May 2003,
-Conjecture 2 and Lemma 1. This is not a new mathematical discovery.
+Conjecture 2 and Lemma 1.
 AI assistance was used in the Lean development.
 -/
 import LeanGraphProofs.Support.Independence
@@ -28,10 +28,10 @@ import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
 import Mathlib.Tactic
 
 /-!
-Independent Lean proof of
+Lean formalization of
 `WrittenOnTheWallII.GraphConjecture7.conjecture7`.
 
-This file does not import the frozen sorry theorem. It uses the existing
+This proof uses the original
 `Ls` / `indepNeighborsCard` / `indepNum` API unchanged.
 -/
 

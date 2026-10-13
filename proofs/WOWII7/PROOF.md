@@ -2,10 +2,10 @@
 
 Mathematics: Ermelinda DeLaVina, Siemion Fajtlowicz and Bill Waller,
 *On Some Conjectures of Griggs and Graffiti*, March 2002, revised May 2003,
-Conjecture 2 and Lemma 1. This is not a new mathematical discovery.
+Conjecture 2 and Lemma 1.
 
 Frozen statement: The Formal Conjectures Authors, 2026.
-New Lean development and write-up: Wentao Li, 2026.
+Lean formalization and write-up: Wentao Li, 2026.
 AI assistance was used in the Lean development and verification.
 
 ## Target

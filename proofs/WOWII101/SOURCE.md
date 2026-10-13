@@ -10,6 +10,6 @@
 - [Canonical published Lean proof](../../LeanGraphProofs/WOWII101.lean), declaration `WOWII101.conjecture101`.
 - [Readable proof](PROOF.md) and [verification procedure](../../verification/README.md).
 
-This package is a Lean formalization of known mathematics. The theorem retains the original finite-type, nontriviality and connectedness hypotheses. The current DeepMind target is compared to a wrapper applying this proof, including its dependent definitions.
+The theorem retains the original finite-type, nontriviality and connectedness hypotheses. The current DeepMind target is compared to a wrapper applying this proof, including its dependent definitions.
 
 The local support modules preserve the original graph definitions. Packaging changes remove repository-specific module/attribute metadata and use Mathlib v4.34.0-rc2; the deprecated tactic lemmas `dif_pos`, `if_pos`, and `if_neg` are renamed to `dite_eq_left`, `ite_eq_left`, and `ite_eq_right`. No target definition or mathematical hypothesis is changed.
